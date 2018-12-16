@@ -17,14 +17,26 @@ class RandomWordsState extends State<RandomWords> {
   // Empty list of type WordPair
   final _suggestions = <WordPair>[];
 
+  // Saved set of words
+  final _saved = new Set<WordPair>(); // Add this line
+
   /* Prefixing an identifier with an underscore enforces privacy in the Dart language. */
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
   Widget _buildRow(WordPair pair) {
+
+    // to ensure that a word pairing has not already been added to favorites.
+    // i.e. whether to color-in the heart or not
+    final bool alreadySaved = _saved.contains(pair);
+
     return ListTile(
       title: Text(
         pair.asPascalCase,
         style: _biggerFont,
+      ),
+      trailing: new Icon(   // Load material icon
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
       ),
     );
   }
